@@ -1,4 +1,4 @@
-from sqlalchemy import DateTime
+from sqlalchemy import DateTime, ForeignKey
 from sqlalchemy.sql import func
 
 from carford import db
@@ -21,7 +21,10 @@ class User(Base):
 
     email = db.Column(db.String(128), nullable=False, unique=True)
 
-    password = db.Column(db.String(200), nullable=False)
+    carro_id = db.Column(db.Integer, ForeignKey('car.id'))
+
+
+
 
     def __init__(self, name, email, password):
         self.name = name
@@ -35,8 +38,10 @@ class User(Base):
 class Car(Base):
     __tablename__ = "car"
 
+
     name = db.Column(db.String(128), nullable=False)
 
     cor = db.Column(db.String(128), nullable=False, unique=True)
 
     marca = db.Column(db.String(128), nullable=False)
+
