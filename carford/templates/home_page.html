@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <title>Title</title>
+</head>
+<style>
+.{
+display: flex;
+justify-content: center;
+}
+form.login {
+  width: 500px;
+  margin: auto;
+}
+
+
+</style>
+<body>
+{% macro render_field(field, placeholder=None) %}
+{% if field.errors %}
+<div>
+    {% elif field.flags.error %}
+    <div>
+        {% else %}
+        <div>
+            {% endif %}
+            {% set css_class = 'form-control ' + kwargs.pop('class', '') %}
+            {{ field(class=css_class, placeholder=placeholder, **kwargs) }}
+        </div>
+        {% endmacro %}
+
+        <div>
+            <div>
+                <legend>Sign in</legend>
+                {% with errors = get_flashed_messages(category_filter=["error"]) %}
+                {% if errors %}
+                <div>
+                    {% for error in errors %}
+                    {{ error }}<br>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+
+                {% if form.errors %}
+                <div>
+                    {% for field, error in form.errors.items() %}
+                    {% for e in error %}
+                    {{ e }}<br>
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <form method="POST" action="." accept-charset="UTF-8" role="form" , class="login">
+                    <div class="form-group">
+                        {{ form.csrf_token }}
+                        <h5>Nome do propietário</h5>
+                        {{ render_field(form.nome,class="form-control form-control-sm", placeholder="Nome",
+                        autofocus="") }}
+                        <br>
+                        <h5>E-mail</h5>
+                        {{ render_field(form.email, placeholder="Email") }}
+                        <br>
+                        <h5>Marca do carro</h5>
+                        {{ render_field(form.carro, placeholder="Carro") }}
+                        <br>
+                        <h5>Tipo do carro</h5>
+                        <select class="form-select" aria-label="Default select example" name="tipo_carro">
+                            <option selected>Tipo</option>
+                            <option value="Sedan" name="cor_carro">Sedan</option>
+                            <option value="Heatch" name="cor_carro">Heatch</option>
+                            <option value="Conversivel" name="cor_carro">Conversivel</option>
+                        </select>
+                        <br>
+                        <br>
+                        <h5>Cor do carro</h5>
+                        <select class="form-select" aria-label="Default select example" name="cor_carro">
+                            <option selected name="cor_carro">Cor</option>
+                            <option value="Amarelo" name="cor_carro">Amarelo</option>
+                            <option value="Azul" name="cor_carro">Azul</option>
+                            <option value="Cinza" name="cor_carro">Cinza</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
