@@ -8,8 +8,11 @@ app.config.from_object("config")
 
 db = SQLAlchemy(app)
 
-from carford.controllers.carford_controller import model_carford
+from carford.controllers.carford_controller import model_carford, CadastroPropietario
 
-app.register_blueprint(model_carford)
 
+cadastrar_proprietario = CadastroPropietario.as_view("cadastro_view")
+app.add_url_rule(
+    "/cadastro/", view_func=cadastrar_proprietario, methods=["GET", "POST"]
+)
 db.create_all()

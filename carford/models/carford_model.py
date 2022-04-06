@@ -19,29 +19,20 @@ class User(Base):
 
     name = db.Column(db.String(128), nullable=False)
 
-    email = db.Column(db.String(128), nullable=False, unique=True)
+    email = db.Column(db.String(128), nullable=False)
 
-    carro_id = db.Column(db.Integer, ForeignKey('car.id'))
+    carro = db.Column(db.String(128), nullable=False)
 
+    cor_carro = db.Column(db.String(128), nullable=False)
 
+    tipo_carro = db.Column(db.String(128), nullable=False)
 
-
-    def __init__(self, name, email, password):
+    def __init__(self, name, email, carro, tipo_carro, cor_carro):
         self.name = name
         self.email = email
-        self.password = password
+        self.carro = carro
+        self.tipo_carro = tipo_carro
+        self.cor_carro = cor_carro
 
     def __repr__(self):
         return "<User %r>" % self.name
-
-
-class Car(Base):
-    __tablename__ = "car"
-
-
-    name = db.Column(db.String(128), nullable=False)
-
-    cor = db.Column(db.String(128), nullable=False, unique=True)
-
-    marca = db.Column(db.String(128), nullable=False)
-
